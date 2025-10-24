@@ -6,7 +6,7 @@ Archive of the Fraud Account Detection Project - Dataset Preparation
 # Getting Started
 ## ***Installation***
 ```bash
-\# Clone the files
+# Clone the files
 git clone https://github.com/Jyusi/precomputed-account-aggregator.git
-/# Install dependencies
+# Install dependencies
 pip install -r requirements.txt
