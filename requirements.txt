@@ -1,3 +1,12 @@
+# For aggregator
 polars
 numpy
 tqdm
+
+# For analysis and model building
+catboost
+scikit-learn
+optuna
+pandas
+seaborn
+matplotlib
