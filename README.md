@@ -1,16 +1,26 @@
 # Precomputed Account Aggregator for Fraud Detection
 
-This repository is an **archive of the Fraud Account Detection Project**, with a special focus on scalable dataset preparation for machine learning and analysis. The core workflow here is designed to process, aggregate, and transform large-scale transactional data from blockchain and/or financial ledgers, with the aim of exposing features and patterns indicative of fraud or abnormal account behavior.
+This repository archives a **refined and resource-efficient workflow** for fraud account detection in large-scale transaction data. It builds on the original dataset provided by [michaelcheungkm/Prediction-of-Good-or-Bad-Accounts](https://github.com/michaelcheungkm/Prediction-of-Good-or-Bad-Accounts/tree/459923ea7f521565a50d54e22a11325995b187c7/natxis), but **completely redesigns and improves** the dataset preparation and modeling pipeline.
+
+---
+
+## What's Different and Improved?
+
+- **Only the raw dataset is used from the original source;** all preparation, aggregation, and modeling code is rewritten from scratch and enhanced for resource balance and time efficiency.
+- **Extensive use of Polars and vectorized/numpy-based routines,** reducing memory overhead and offering much faster data trimming and feature engineering.
+- **Columnar (tabular) approach:** All account- and transaction-level features are extracted and aggregated in a form suitable for modern ML workflows, avoiding slow iterative scans.
+- **Clear separation of dataset preparation (`main_aggregator.ipynb`) and modeling/analysis (`main_f1.ipynb`),** enabling parallel experimentation and reproducible machine learning.
 
 ---
 
 ## Project Overview
 
-Financial and transactional systems create massive logs of operations between accounts. Fraud detection in such environments requires not just isolating suspicious transactions but also understanding **behavioral context**—how accounts interact over time and across the network. This project tackles that need by:
+Financial and transactional systems create massive logs of operations Fraud detection in transactional systems depends on discerning behavioral patterns among millions of accounts. This repo provides a scalable pipeline to:
 
-- Efficiently extracting features from transaction graphs
-- Categorizing accounts based on ground-truth or predicted flags (e.g., normal/abnormal)
-- Aggregating and transforming data for advanced analysis and predictive modeling
+- Build efficient transaction graphs from raw logs
+- Engineer detailed features at both transaction and account level
+- Aggregate statistics in a memory-efficient and parallelized manner
+- Enable high-performance fraud modeling with optimized ML infrastructure
 
 ---
 
@@ -38,7 +48,7 @@ Financial and transactional systems create massive logs of operations between ac
 - Per-account aggregates are computed for different flags and types (‘normal’, ‘abnormal’, A/B directionality, temporal bins).
 - Data is further pruned, deduplicated, and restructured to produce wide tabular summaries with hundreds (or thousands) of features per account.
 
-#### _Result_: **A highly structured, feature-rich account-level dataset.**
+**Key improvement:** This step eliminates memory spikes and greatly shortens runtime (vs. the original repo’s iterative/single-threaded approach).
 
 ---
 
@@ -59,7 +69,7 @@ Financial and transactional systems create massive logs of operations between ac
 - Feature selection, ranking, and importance assertions are performed to help focus on the most predictive signals.
 - Cross-validation and advanced threshold tuning (maximizing F1 at precision-recall curve best points) ensure that fraudulent accounts are optimally detected.
 
-#### _Result_: **A ready-to-use set of features and workflows for high-performance classification, anomaly detection, or further analytics.**
+**Key Contribution:** Entire modeling code and feature logic is written for tabular efficiency. You can run mainstream ML with thousands of features in serveal minutes.
 
 ---
 
@@ -79,26 +89,37 @@ See [requirements.txt](https://github.com/Jyusi/precomputed-account-aggregator/b
 
 ## Key Repository Elements
 
-- **main_aggregator.ipynb:** Data trimming, cleaning, transaction graph construction, feature extraction. _Preparation stage._
-- **main_f1.ipynb:** Feature engineering, tabular consolidation, model training (CatBoost, F1-centric optimization), ranking. _Modeling stage._
-- **README.md:** Project documentation and workflow guidance.
-- **requirements.txt:** All dependencies for dataset preparation, analysis, and modeling.
+- **main_aggregator.ipynb:** All dataset trimming, feature creation, graph construction—optimized for speed/memory.
+- **main_f1.ipynb:** New tabular feature engineering, burst/activity detection, ML modeling, feature importance ranking.
+- **requirements.txt:** All dependencies for prep and modeling (Polars, CatBoost, Optuna, etc).
+- **README.md:** You’re reading this!
 
 ---
 
 ## Why this pipeline?
 
 - **Scalable**: Handles millions of transactions efficiently, using parallelism and columnar data structures.
+- **Efficiency:** Preprocessing and aggregation routines are built for speed and memory balance, suitable for larger or more complex datasets.
 - **Flexible**: Facilitates both graph-based and tabular analysis.
 - **Rich Features**: Aggregates behavioral, temporal, and statistical signals critical for fraud detection.
 - **Actionable**: Outputs are ready for machine learning but also usable for audit, analytics, and further network investigation.
+- **Future-Proof:** Adaptable architecture—add new features, run different ML backends, or swap in new transaction sources easily.
+- **Composability:** Clearly split data prep and modeling, supporting pipeline orchestration and reproducibility.
+
+---
+
+## Source Data Acknowledgement
+
+The raw dataset is sourced from:
+- [Prediction-of-Good-or-Bad-Accounts/natxis](https://github.com/michaelcheungkm/Prediction-of-Good-or-Bad-Accounts/tree/459923ea7f521565a50d54e22a11325995b187c7/natxis) by michaelcheungkm
+All code, feature engineering, and modeling in this repository are original and not derived from the source repo.
 
 ---
 
 ## Citation & Reuse
 
-If you use this dataset preparation or modeling workflow, please cite or reference this repository. For extensions, contributions, or collaboration, open an issue or submit a PR.
+If you use this workflow or adapt the feature engineering/modeling code, please cite or reference this repository. For extensions, issues or suggestions, please open an issue or PR.
 
 ---
 
-_This archive is the result of extensive research and engineering for fraud analytics. For questions, reach out via GitHub Issues._
+_This project is maintained to support reproducible, scalable fraud analytics. For questions or contributions, use GitHub Issues._
